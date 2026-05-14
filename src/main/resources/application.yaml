@@ -1,3 +1,7 @@
+api:
+  security:
+    token:
+      secret: ${TOKEN}
 spring:
   application:
     name: api

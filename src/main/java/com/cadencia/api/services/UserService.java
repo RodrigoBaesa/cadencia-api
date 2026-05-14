@@ -4,6 +4,7 @@ import com.cadencia.api.dtos.UserRequestDTO;
 import com.cadencia.api.entities.User;
 import com.cadencia.api.repositories.UserRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -11,9 +12,11 @@ import org.springframework.web.server.ResponseStatusException;
 public class UserService {
 
     private final UserRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository repository) {
+    public UserService(UserRepository repository, PasswordEncoder passwordEncoder) {
         this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public User create(UserRequestDTO data) {
@@ -29,7 +32,7 @@ public class UserService {
 
         newUser.setName(data.name());
         newUser.setEmail(data.email());
-        newUser.setPassword(data.password());
+        newUser.setPassword(passwordEncoder.encode(data.password()));
 
         newUser.setXp(0);
 

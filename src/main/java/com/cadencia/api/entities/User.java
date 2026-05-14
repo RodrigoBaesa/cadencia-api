@@ -1,10 +1,16 @@
 package com.cadencia.api.entities;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "usr")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,6 +45,7 @@ public class User {
         this.email = email;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
@@ -53,5 +60,15 @@ public class User {
 
     public void setXp(Integer xp) {
         this.xp = xp;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
     }
 }
