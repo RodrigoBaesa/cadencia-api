@@ -3,15 +3,13 @@ package com.cadencia.api.controllers;
 import com.cadencia.api.dtos.UserRequestDTO;
 import com.cadencia.api.entities.User;
 import com.cadencia.api.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/users")
 public class UserController {
 
@@ -22,7 +20,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> create(@RequestBody UserRequestDTO data) {
+    public ResponseEntity<User> create(@Valid @RequestBody UserRequestDTO data) {
 
         User createdUser = service.create(data);
 
