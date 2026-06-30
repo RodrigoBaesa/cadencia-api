@@ -26,6 +26,11 @@ public class Lesson {
     @Column(columnDefinition = "jsonb")
     private Map<String, Object> content;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @com.fasterxml.jackson.annotation.JsonIgnore
+    @JoinColumn(name = "module_id")
+    private Module module;
+
     public Lesson() {
     }
 
@@ -67,5 +72,13 @@ public class Lesson {
 
     public void setContent(Map<String, Object> content) {
         this.content = content;
+    }
+
+    public Module getModule() {
+        return module;
+    }
+
+    public void setModule(Module module) {
+        this.module = module;
     }
 }
